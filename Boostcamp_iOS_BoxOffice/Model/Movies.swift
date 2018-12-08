@@ -13,14 +13,15 @@ struct APIResponse: Codable {
 }
 
 struct Movies: Codable {
+    let grade: Int
     let thumb: String
     let reservation_grade: Int
-    let reservation_rate: Double
-    let date: String
-    let grade: Int
     let title: String
-    let id: String
+    let reservation_rate: Double
     let user_rating: Double
+    let date: String
+    let id: String
+
     
     var movieInfo: String {
         return "평점 : \(reservation_rate) 예매순위 : \(grade) 예매율 : \(user_rating)"
