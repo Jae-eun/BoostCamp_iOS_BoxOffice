@@ -8,22 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		008635F321BB9281002CED86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008635F221BB9281002CED86 /* AppDelegate.swift */; };
-		008635F521BB9281002CED86 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008635F421BB9281002CED86 /* FirstViewController.swift */; };
-		008635F721BB9281002CED86 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008635F621BB9281002CED86 /* SecondViewController.swift */; };
 		008635FA21BB9281002CED86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 008635F821BB9281002CED86 /* Main.storyboard */; };
 		008635FC21BB9283002CED86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 008635FB21BB9283002CED86 /* Assets.xcassets */; };
 		008635FF21BB9283002CED86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 008635FD21BB9283002CED86 /* LaunchScreen.storyboard */; };
+		0086360A21BBDD93002CED86 /* MovieTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086360921BBDD93002CED86 /* MovieTableViewController.swift */; };
+		0086360C21BBDDA5002CED86 /* MovieCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086360B21BBDDA5002CED86 /* MovieCollectionViewController.swift */; };
+		0086360E21BBDDCC002CED86 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086360D21BBDDCC002CED86 /* MovieCollectionViewCell.swift */; };
+		0086361021BBDDDB002CED86 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086360F21BBDDDB002CED86 /* MovieTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		008635EF21BB9281002CED86 /* Boostcamp_iOS_BoxOffice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Boostcamp_iOS_BoxOffice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		008635F221BB9281002CED86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		008635F421BB9281002CED86 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		008635F621BB9281002CED86 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		008635F921BB9281002CED86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		008635FB21BB9283002CED86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		008635FE21BB9283002CED86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0086360021BB9283002CED86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0086360921BBDD93002CED86 /* MovieTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewController.swift; sourceTree = "<group>"; };
+		0086360B21BBDDA5002CED86 /* MovieCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewController.swift; sourceTree = "<group>"; };
+		0086360D21BBDDCC002CED86 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
+		0086360F21BBDDDB002CED86 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +60,41 @@
 		008635F121BB9281002CED86 /* Boostcamp_iOS_BoxOffice */ = {
 			isa = PBXGroup;
 			children = (
+				0086360621BBDCED002CED86 /* View */,
+				0086360721BBDCF3002CED86 /* Model */,
+				0086360821BBDCF8002CED86 /* Controller */,
 				008635F221BB9281002CED86 /* AppDelegate.swift */,
-				008635F421BB9281002CED86 /* FirstViewController.swift */,
-				008635F621BB9281002CED86 /* SecondViewController.swift */,
 				008635F821BB9281002CED86 /* Main.storyboard */,
 				008635FB21BB9283002CED86 /* Assets.xcassets */,
 				008635FD21BB9283002CED86 /* LaunchScreen.storyboard */,
 				0086360021BB9283002CED86 /* Info.plist */,
 			);
 			path = Boostcamp_iOS_BoxOffice;
+			sourceTree = "<group>";
+		};
+		0086360621BBDCED002CED86 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0086360D21BBDDCC002CED86 /* MovieCollectionViewCell.swift */,
+				0086360F21BBDDDB002CED86 /* MovieTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0086360721BBDCF3002CED86 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0086360821BBDCF8002CED86 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0086360921BBDD93002CED86 /* MovieTableViewController.swift */,
+				0086360B21BBDDA5002CED86 /* MovieCollectionViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +168,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				008635F721BB9281002CED86 /* SecondViewController.swift in Sources */,
+				0086361021BBDDDB002CED86 /* MovieTableViewCell.swift in Sources */,
+				0086360A21BBDD93002CED86 /* MovieTableViewController.swift in Sources */,
 				008635F321BB9281002CED86 /* AppDelegate.swift in Sources */,
-				008635F521BB9281002CED86 /* FirstViewController.swift in Sources */,
+				0086360C21BBDDA5002CED86 /* MovieCollectionViewController.swift in Sources */,
+				0086360E21BBDDCC002CED86 /* MovieCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
