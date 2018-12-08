@@ -41,6 +41,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00196C1F21BBF9CB001BC7A9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				008635F221BB9281002CED86 /* AppDelegate.swift */,
+				008635FB21BB9283002CED86 /* Assets.xcassets */,
+				008635FD21BB9283002CED86 /* LaunchScreen.storyboard */,
+				0086360021BB9283002CED86 /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		008635E621BB9281002CED86 = {
 			isa = PBXGroup;
 			children = (
@@ -63,11 +74,7 @@
 				0086360621BBDCED002CED86 /* View */,
 				0086360721BBDCF3002CED86 /* Model */,
 				0086360821BBDCF8002CED86 /* Controller */,
-				008635F221BB9281002CED86 /* AppDelegate.swift */,
-				008635F821BB9281002CED86 /* Main.storyboard */,
-				008635FB21BB9283002CED86 /* Assets.xcassets */,
-				008635FD21BB9283002CED86 /* LaunchScreen.storyboard */,
-				0086360021BB9283002CED86 /* Info.plist */,
+				00196C1F21BBF9CB001BC7A9 /* Supporting Files */,
 			);
 			path = Boostcamp_iOS_BoxOffice;
 			sourceTree = "<group>";
@@ -75,8 +82,9 @@
 		0086360621BBDCED002CED86 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				0086360D21BBDDCC002CED86 /* MovieCollectionViewCell.swift */,
+				008635F821BB9281002CED86 /* Main.storyboard */,
 				0086360F21BBDDDB002CED86 /* MovieTableViewCell.swift */,
+				0086360D21BBDDCC002CED86 /* MovieCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
