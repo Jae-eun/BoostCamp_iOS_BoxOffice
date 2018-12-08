@@ -11,10 +11,10 @@
 		008635FA21BB9281002CED86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 008635F821BB9281002CED86 /* Main.storyboard */; };
 		008635FC21BB9283002CED86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 008635FB21BB9283002CED86 /* Assets.xcassets */; };
 		008635FF21BB9283002CED86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 008635FD21BB9283002CED86 /* LaunchScreen.storyboard */; };
-		0086360A21BBDD93002CED86 /* MovieTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086360921BBDD93002CED86 /* MovieTableViewController.swift */; };
-		0086360C21BBDDA5002CED86 /* MovieCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086360B21BBDDA5002CED86 /* MovieCollectionViewController.swift */; };
 		0086360E21BBDDCC002CED86 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086360D21BBDDCC002CED86 /* MovieCollectionViewCell.swift */; };
 		0086361021BBDDDB002CED86 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086360F21BBDDDB002CED86 /* MovieTableViewCell.swift */; };
+		0086361221BBE551002CED86 /* MovieTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086361121BBE551002CED86 /* MovieTableViewController.swift */; };
+		0086361421BBE55E002CED86 /* MovieCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086361321BBE55E002CED86 /* MovieCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,10 +24,10 @@
 		008635FB21BB9283002CED86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		008635FE21BB9283002CED86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0086360021BB9283002CED86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0086360921BBDD93002CED86 /* MovieTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewController.swift; sourceTree = "<group>"; };
-		0086360B21BBDDA5002CED86 /* MovieCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewController.swift; sourceTree = "<group>"; };
 		0086360D21BBDDCC002CED86 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		0086360F21BBDDDB002CED86 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
+		0086361121BBE551002CED86 /* MovieTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewController.swift; sourceTree = "<group>"; };
+		0086361321BBE55E002CED86 /* MovieCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,8 +91,8 @@
 		0086360821BBDCF8002CED86 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0086360921BBDD93002CED86 /* MovieTableViewController.swift */,
-				0086360B21BBDDA5002CED86 /* MovieCollectionViewController.swift */,
+				0086361121BBE551002CED86 /* MovieTableViewController.swift */,
+				0086361321BBE55E002CED86 /* MovieCollectionViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -168,10 +168,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0086361221BBE551002CED86 /* MovieTableViewController.swift in Sources */,
 				0086361021BBDDDB002CED86 /* MovieTableViewCell.swift in Sources */,
-				0086360A21BBDD93002CED86 /* MovieTableViewController.swift in Sources */,
+				0086361421BBE55E002CED86 /* MovieCollectionViewController.swift in Sources */,
 				008635F321BB9281002CED86 /* AppDelegate.swift in Sources */,
-				0086360C21BBDDA5002CED86 /* MovieCollectionViewController.swift in Sources */,
 				0086360E21BBDDCC002CED86 /* MovieCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
