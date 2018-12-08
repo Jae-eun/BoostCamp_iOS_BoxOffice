@@ -199,6 +199,10 @@
                                         </constraints>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="8rJ-Kc-sve" id="Zbr-K8-fur"/>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="3BR-Xg-dfU"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <constraints>
