@@ -44,40 +44,40 @@ class MovieTableViewController: UIViewController {
     }
 }
 
-    extension MovieTableViewController: UITableViewDataSource {
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            guard let cell: MovieTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as? MovieTableViewCell else { return UITableViewCell() }
+extension MovieTableViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: MovieTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as? MovieTableViewCell else { return UITableViewCell() }
+        
+        let movie: Movies = self.movies[indexPath.row]
+        
+        cell.movieTitleLabel.text = movie.title
+        cell.movieInfoLabel.text = movie.movieInfo
+        cell.releaseDateLabel.text = "개봉일 : \(movie.date)"
+        cell.movieImageView.image = nil
+        
+        DispatchQueue.global().async {
+            guard let imageURL: URL = URL(string: movie.thumb) else { return }
+            guard  let imageData: Data = try? Data(contentsOf: imageURL) else { return }
             
-            let movie: Movies = self.movies[indexPath.row]
-            
-            cell.movieTitleLabel.text = movie.title
-            cell.movieInfoLabel.text = movie.movieInfo
-            cell.releaseDateLabel.text = "개봉일 : \(movie.date)"
-            cell.movieImageView.image = nil
-            
-            DispatchQueue.global().async {
-                guard let imageURL: URL = URL(string: movie.thumb) else { return }
-                guard  let imageData: Data = try? Data(contentsOf: imageURL) else { return }
-                
-                DispatchQueue.main.async {
-                    if let index: IndexPath = tableView.indexPath(for: cell) {
-                        if index.row == indexPath.row {
-                            cell.movieImageView.image = UIImage(data: imageData)
-                        }
+            DispatchQueue.main.async {
+                if let index: IndexPath = tableView.indexPath(for: cell) {
+                    if index.row == indexPath.row {
+                        cell.movieImageView.image = UIImage(data: imageData)
                     }
                 }
             }
-            return cell
         }
-            func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-                return movies.count
-            }
-        
+        return cell
     }
-    extension MovieTableViewController: UITableViewDelegate {
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 160
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return movies.count
         }
+}
+
+extension MovieTableViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 160
     }
+}
 
 
