@@ -141,7 +141,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Woi-Uh-d0x">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionCell" id="Woi-Uh-d0x" customClass="MovieCollectionViewCell" customModule="Boostcamp_iOS_BoxOffice" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="174" height="289"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -197,6 +197,13 @@
                                             <constraint firstItem="OF9-16-bDE" firstAttribute="top" secondItem="1MT-Up-OfY" secondAttribute="top" constant="-5" id="rGP-6c-ZSK"/>
                                             <constraint firstItem="1MT-Up-OfY" firstAttribute="width" secondItem="OF9-16-bDE" secondAttribute="width" multiplier="0.2" id="zoH-hT-F8Q"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="gradeImageView" destination="1MT-Up-OfY" id="fVh-Oh-yUu"/>
+                                            <outlet property="movieImageview" destination="OF9-16-bDE" id="T4q-HN-fl8"/>
+                                            <outlet property="movieInfolable" destination="cIf-Rn-IlH" id="jSl-db-LFf"/>
+                                            <outlet property="movieTitleLabel" destination="qxo-op-qef" id="JK0-GC-AcI"/>
+                                            <outlet property="releaseDateLabel" destination="n5x-9G-EFp" id="O3B-Xd-oVG"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
