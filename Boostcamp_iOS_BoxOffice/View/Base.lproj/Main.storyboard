@@ -121,7 +121,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DlU-JA-6BW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2407" y="-62"/>
+            <point key="canvasLocation" x="2548" y="-62"/>
         </scene>
         <!--Movie Collection View Controller-->
         <scene sceneID="wg7-f3-ORb">
@@ -223,6 +223,9 @@
                     <navigationItem key="navigationItem" id="BXF-pR-sMG">
                         <barButtonItem key="backBarButtonItem" title="영화목록" id="FyW-Ad-zyi"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="jxy-L4-J35" id="hTO-pU-oKc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>

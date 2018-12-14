@@ -45,13 +45,17 @@ class MovieTableViewController: UIViewController {
 }
 
 extension MovieTableViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return movies.count
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: MovieTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as? MovieTableViewCell else { return UITableViewCell() }
         
         let movie: Movies = self.movies[indexPath.row]
         
         cell.movieTitleLabel.text = movie.title
-        cell.movieInfoLabel.text = movie.movieInfo
+        cell.movieInfoLabel.text = movie.movieTableInfo
         cell.releaseDateLabel.text = "개봉일 : \(movie.date)"
         cell.movieImageView.image = nil
         
@@ -69,9 +73,6 @@ extension MovieTableViewController: UITableViewDataSource {
         }
         return cell
     }
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return movies.count
-        }
 }
 
 extension MovieTableViewController: UITableViewDelegate {

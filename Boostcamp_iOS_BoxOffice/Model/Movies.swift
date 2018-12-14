@@ -23,7 +23,11 @@ struct Movies: Codable {
     let id: String
 
     
-    var movieInfo: String {
+    var movieTableInfo: String {
         return "평점 : \(reservation_rate) 예매순위 : \(grade) 예매율 : \(user_rating)"
+    }
+    
+    var movieCollectionInfo: String {
+        return "\(reservation_grade)위(\(user_rating)) / \(reservation_rate)%"
     }
 }
