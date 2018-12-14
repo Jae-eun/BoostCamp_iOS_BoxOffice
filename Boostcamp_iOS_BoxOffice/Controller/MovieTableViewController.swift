@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class MovieTableViewController: UIViewController {
 
@@ -30,8 +31,9 @@ class MovieTableViewController: UIViewController {
             guard let data = data else { return }
             
             do {
-                let apiResponse: APIResponse = try JSONDecoder().decode(APIResponse.self, from: data)
+                let apiResponse: MoviesAPIResponse = try JSONDecoder().decode(MoviesAPIResponse.self, from: data)
                 self.movies = apiResponse.movies
+                
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()

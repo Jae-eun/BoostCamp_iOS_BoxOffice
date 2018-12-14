@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct APIResponse3: Codable {
+struct CommentsAPIResponse: Codable {
     let comments: [Comments]
 }
 
