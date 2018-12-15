@@ -9,6 +9,7 @@
 import UIKit
 
 class DirectorTableViewCell: UITableViewCell {
+    
     @IBOutlet weak var directorLabel: UILabel!
     @IBOutlet weak var actorLabel: UILabel!
 }

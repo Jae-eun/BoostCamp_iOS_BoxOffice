@@ -493,7 +493,7 @@
                                         <connections>
                                             <outlet property="gradeImageView" destination="1MT-Up-OfY" id="fVh-Oh-yUu"/>
                                             <outlet property="movieImageview" destination="OF9-16-bDE" id="T4q-HN-fl8"/>
-                                            <outlet property="movieInfolable" destination="cIf-Rn-IlH" id="jSl-db-LFf"/>
+                                            <outlet property="movieInfoLabel" destination="cIf-Rn-IlH" id="Hs7-WT-h1r"/>
                                             <outlet property="movieTitleLabel" destination="qxo-op-qef" id="JK0-GC-AcI"/>
                                             <outlet property="releaseDateLabel" destination="n5x-9G-EFp" id="O3B-Xd-oVG"/>
                                         </connections>

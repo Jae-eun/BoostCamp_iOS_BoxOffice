@@ -17,50 +17,41 @@ class MovieCollectionViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        guard let url: URL = URL(string: "http://connect-boxoffice.run.goorm.io/movies?order_type=0") else { return }
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: DidReceiveMoviesNotification, object: nil)
         
-        let session: URLSession = URLSession(configuration: .default)
-        let dataTask: URLSessionDataTask = session.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
-            
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            
-            guard let data = data else { return }
-            
-            do {
-                let apiResponse: APIResponse = try JSONDecoder().decode(APIResponse.self, from: data)
-                self.movies = apiResponse.movies
-                
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
-            } catch(let err) {
-                print(err.localizedDescription)
-            }
+         requestMovies(orderType: 0)
+    }
+    
+    @objc func didReceiveMoviesNotification(_ noti: Notification) {
+        guard let movies: [Movies] = noti.userInfo?["movies"] as? [Movies] else { return  }
+        
+        self.movies = movies
+        
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
-        dataTask.resume()
     }
 }
 
 extension MovieCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(movies.count)
         return movies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell: MovieCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellIdentifier, for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
         
-        let movies: Movies = self.movies[indexPath.item]
+        let movie: Movies = self.movies[indexPath.item]
         
-        cell.movieTitleLabel.text = movies.title
-        cell.movieInfoLabel.text = movies.movieCollectionInfo
-        cell.releaseDateLabel.text = movies.date
+        cell.movieTitleLabel.text = movie.title
+        cell.movieInfoLabel.text = movie.movieCollectionInfo
+        cell.releaseDateLabel.text = movie.date
         cell.movieImageview.image = nil
         
         DispatchQueue.global().async {
-            guard let imageURL: URL = URL(string: movies.thumb) else { return }
+            guard let imageURL: URL = URL(string: movie.thumb) else { return }
             guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
             
             DispatchQueue.main.async {

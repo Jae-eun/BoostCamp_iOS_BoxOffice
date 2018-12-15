@@ -9,5 +9,6 @@
 import UIKit
 
 class SynopsisTableViewCell: UITableViewCell {
+    
     @IBOutlet weak var synopsisLabel: UILabel!
 }

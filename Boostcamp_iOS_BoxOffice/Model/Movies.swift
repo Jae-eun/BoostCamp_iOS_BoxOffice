@@ -10,24 +10,36 @@ import Foundation
 
 struct MoviesAPIResponse: Codable {
     let movies: [Movies]
+    let orderType: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case movies
+        case orderType = "order_type"
+    }
 }
 
 struct Movies: Codable {
     let grade: Int
     let thumb: String
-    let reservation_grade: Int
+    let reservationGrade: Int
     let title: String
-    let reservation_rate: Double
-    let user_rating: Double
+    let reservationRate: Double
+    let userRating: Double
     let date: String
     let id: String
 
+    enum CodingKeys: String, CodingKey {
+        case grade, thumb, title, date, id
+        case reservationRate = "reservation_rate"
+        case userRating = "user_rating"
+        case reservationGrade = "reservation_grade"
+    }
     
     var movieTableInfo: String {
-        return "평점 : \(reservation_rate) 예매순위 : \(grade) 예매율 : \(user_rating)"
+        return "평점 : \(reservationRate) 예매순위 : \(grade) 예매율 : \(userRating)"
     }
     
     var movieCollectionInfo: String {
-        return "\(reservation_grade)위(\(user_rating)) / \(reservation_rate)%"
+        return "\(reservationGrade)위(\(userRating)) / \(reservationRate)%"
     }
 }

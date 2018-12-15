@@ -9,6 +9,7 @@
 import UIKit
 
 class CommentsTableViewCell: UITableViewCell {
+    
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var nickNameLabel: UILabel!
     @IBOutlet weak var creationTimeLabel: UILabel!

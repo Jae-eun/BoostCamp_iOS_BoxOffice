@@ -17,14 +17,22 @@ struct MovieInfo: Codable {
     let grade: Int
     let actor: String
     let duration: Int
-    let reservation_grade: Int
+    let reservationGrade: Int
     let title: String
-    let reservation_rate: Double
-    let user_rating: Double
+    let reservationRate: Double
+    let userRating: Double
     let date: String
     let director: String
     let id: String
     let image: String
     let synopsis: String
     let genre: String
+    
+    enum CodingKeys: String, CodingKey {
+        case audience, grade, actor, duration, title, date, director, id, image, synopsis, genre
+        case reservationGrade = "reservation_grade"
+        case reservationRate = "reservation_rate"
+        case userRating = "user_rating"
+    }
 }
+

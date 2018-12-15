@@ -16,6 +16,11 @@ struct Comments: Codable {
     let rating: Double
     let timestamp: Double
     let writer: String
-    let movie_id: String
+    let movieId: String
     let contents: String
+    
+    enum CodingKeys: String, CodingKey {
+        case rating, timestamp, writer, contents
+        case movieId = "movie_id"
+    }
 }

@@ -18,36 +18,28 @@ class MovieTableViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        guard let url: URL = URL(string: "http://connect-boxoffice.run.goorm.io/movies?order_type=0") else { return }
+        NotificationCenter.default.post(name: DidReceiveMoviesNotification, object: nil)
         
-        let session: URLSession = URLSession(configuration: .default)
-        let dataTask: URLSessionDataTask = session.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
-            
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            
-            guard let data = data else { return }
-            
-            do {
-                let apiResponse: MoviesAPIResponse = try JSONDecoder().decode(MoviesAPIResponse.self, from: data)
-                self.movies = apiResponse.movies
-                
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            } catch(let err) {
-                print(err.localizedDescription)
-            }
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: DidReceiveMoviesNotification, object: nil)
+
+       requestMovies(orderType: 0)
+    }
+    
+    @objc func didReceiveMoviesNotification(_ noti: Notification) {
+        guard let movies: [Movies] = noti.userInfo?["movies"] as? [Movies] else { return  }
+        self.movies = movies
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
-        dataTask.resume()
     }
 }
 
+
+
 extension MovieTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(movies.count)
         return movies.count
     }
     
@@ -63,7 +55,7 @@ extension MovieTableViewController: UITableViewDataSource {
         
         DispatchQueue.global().async {
             guard let imageURL: URL = URL(string: movie.thumb) else { return }
-            guard  let imageData: Data = try? Data(contentsOf: imageURL) else { return }
+            guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
             
             DispatchQueue.main.async {
                 if let index: IndexPath = tableView.indexPath(for: cell) {
