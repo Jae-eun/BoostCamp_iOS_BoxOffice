@@ -35,7 +35,7 @@ class MovieDetailViewController: UIViewController {
     //    @IBOutlet weak var commentLabel: UILabel!
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: CommentTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? CommentTableViewCell else { return UITableViewCell() }
+        guard let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? CommentsTableViewCell else { return UITableViewCell() }
         
         let comment: Comments = self.comments[indexPath.row]
         
