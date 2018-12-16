@@ -18,8 +18,6 @@ class MovieTableViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        NotificationCenter.default.post(name: DidReceiveMoviesNotification, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: DidReceiveMoviesNotification, object: nil)
 
        requestMovies(orderType: 0)
@@ -35,11 +33,8 @@ class MovieTableViewController: UIViewController {
     }
 }
 
-
-
 extension MovieTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(movies.count)
         return movies.count
     }
     
@@ -73,6 +68,14 @@ extension MovieTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 160
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let movie = movies[indexPath.row]
+        
+        guard let movieDetailViewController = storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController else { return }
+            movieDetailViewController.title = movie.title
+            movieDetailViewController.movieId = movie.id
+
+            navigationController?.pushViewController(movieDetailViewController, animated: true)
+    }
 }
-
-

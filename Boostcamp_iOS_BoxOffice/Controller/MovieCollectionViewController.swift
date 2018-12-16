@@ -36,7 +36,6 @@ class MovieCollectionViewController: UIViewController {
 
 extension MovieCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(movies.count)
         return movies.count
     }
     
@@ -48,7 +47,7 @@ extension MovieCollectionViewController: UICollectionViewDataSource {
         cell.movieTitleLabel.text = movie.title
         cell.movieInfoLabel.text = movie.movieCollectionInfo
         cell.releaseDateLabel.text = movie.date
-        cell.movieImageview.image = nil
+        cell.movieImageView.image = nil
         
         DispatchQueue.global().async {
             guard let imageURL: URL = URL(string: movie.thumb) else { return }
@@ -57,11 +56,24 @@ extension MovieCollectionViewController: UICollectionViewDataSource {
             DispatchQueue.main.async {
                 if let index: IndexPath = collectionView.indexPath(for: cell) {
                     if index.row == indexPath.row {
-                        cell.movieImageview.image = UIImage(data: imageData)
+                        cell.movieImageView.image = UIImage(data: imageData)
                     }
                 }
             }
         }
         return cell
+    }
+}
+
+extension MovieCollectionViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = movies[indexPath.item]
+        
+        guard let movieDetailViewController = storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController else { return }
+        movieDetailViewController.title = movie.title
+        movieDetailViewController.movieId = movie.id
+
+        navigationController?.pushViewController(movieDetailViewController, animated: true)
     }
 }

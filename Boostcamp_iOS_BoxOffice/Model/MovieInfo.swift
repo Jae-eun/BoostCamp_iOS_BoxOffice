@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct MovieInfoAPIResponse: Codable {
-    let movieInfo: [MovieInfo]
-}
+//struct MovieInfoAPIResponse: Codable {
+//    let movieInfo: [MovieInfo]
+//}
 
 struct MovieInfo: Codable {
     let audience: Int
@@ -33,6 +33,14 @@ struct MovieInfo: Codable {
         case reservationGrade = "reservation_grade"
         case reservationRate = "reservation_rate"
         case userRating = "user_rating"
+    }
+   
+    var reservationRateText: String {
+        return "\(reservationGrade)위 \(reservationRate)%"
+    }
+    
+    var GenreAndDurationText: String {
+        return "\(genre)/\(duration)분"
     }
 }
 

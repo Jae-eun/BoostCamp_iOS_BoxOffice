@@ -60,9 +60,9 @@ func requestMovieInfo(id: String) {
         guard let data = data else { return }
         
         do {
-            let apiResponse: MovieInfoAPIResponse = try JSONDecoder().decode(MovieInfoAPIResponse.self, from: data)
+            let apiResponse: MovieInfo = try JSONDecoder().decode(MovieInfo.self, from: data)
             
-            NotificationCenter.default.post(name: DidReceiveMoviesNotification, object: nil, userInfo: ["movieInfo": apiResponse.movieInfo])
+            NotificationCenter.default.post(name: DidReceiveMovieInfoNotification, object: nil, userInfo: ["movieInfo": apiResponse])
         } catch(let err) {
             print(err.localizedDescription)
         }
@@ -72,7 +72,7 @@ func requestMovieInfo(id: String) {
 
 func requestComments(id: String) {
     guard let url = URL(string: "\(baseUrl)/comments?movie_id=\(id)") else {
-        print("Comment Url cannot connect")
+        print("Comments Url cannot connect")
         return
     }
     
@@ -90,7 +90,7 @@ func requestComments(id: String) {
         do {
             let apiResponse: CommentsAPIResponse = try JSONDecoder().decode(CommentsAPIResponse.self, from: data)
             
-            NotificationCenter.default.post(name: DidReceiveMoviesNotification, object: nil, userInfo: ["comments": apiResponse.comments])
+            NotificationCenter.default.post(name: DidReceiveCommentsNotification, object: nil, userInfo: ["comments": apiResponse.comments])
         } catch(let err) {
             print(err.localizedDescription)
         }

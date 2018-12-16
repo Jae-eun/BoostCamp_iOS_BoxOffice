@@ -10,6 +10,12 @@ import Foundation
 
 struct CommentsAPIResponse: Codable {
     let comments: [Comments]
+    let movieId: String
+    
+    enum CodingKeys: String, CodingKey {
+        case comments
+        case movieId = "movie_id"
+    }
 }
 
 struct Comments: Codable {
@@ -18,9 +24,10 @@ struct Comments: Codable {
     let writer: String
     let movieId: String
     let contents: String
+    let id: String
     
     enum CodingKeys: String, CodingKey {
-        case rating, timestamp, writer, contents
+        case rating, timestamp, writer, contents, id
         case movieId = "movie_id"
     }
 }
