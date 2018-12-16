@@ -15,13 +15,18 @@ class MovieCollectionViewController: UIViewController {
     var movies: [Movies] = []
 
     var gradeImageName: String?
+    var orderNumber: Int?
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: DidReceiveMoviesNotification, object: nil)
         
-         requestMovies(orderType: 0)
+        orderNumber = getOrderTypeUserDefaults()
+        if let orderNumber = orderNumber {
+            setNaviBarTitle(orderType: orderNumber)
+            requestMovies(orderType: orderNumber)
+        }
     }
     
     @objc func didReceiveMoviesNotification(_ noti: Notification) {
@@ -33,6 +38,10 @@ class MovieCollectionViewController: UIViewController {
             self.collectionView.reloadData()
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
+    }
+    
+    @IBAction func touchUpSettingButton(_ sender: UIBarButtonItem) {
+        setOrderMoviesActionSheet()
     }
 }
 

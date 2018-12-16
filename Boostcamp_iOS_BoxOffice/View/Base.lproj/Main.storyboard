@@ -106,6 +106,9 @@
                         <barButtonItem key="backBarButtonItem" title="영화목록" id="62V-r8-aD7"/>
                         <barButtonItem key="rightBarButtonItem" image="ic_settings" id="DcP-oU-ODL">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="touchUpSettingButton:" destination="9pv-A4-QxB" id="wJm-oy-CIX"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -615,6 +618,9 @@
                         <barButtonItem key="backBarButtonItem" title="영화목록" id="FyW-Ad-zyi"/>
                         <barButtonItem key="rightBarButtonItem" image="ic_settings" id="UCW-hP-EXq">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="touchUpSettingButton:" destination="8rJ-Kc-sve" id="qvd-rx-ub2"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>

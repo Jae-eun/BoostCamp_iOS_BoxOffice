@@ -15,12 +15,21 @@ class MovieTableViewController: UIViewController {
     let cellIdentifier: String = "TableCell"
     var movies: [Movies] = []
     
+    var orderNumber: Int = 0
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setOrderTypeUserDefaults(orderNumber)
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: DidReceiveMoviesNotification, object: nil)
 
-       requestMovies(orderType: 0)
+        orderNumber = getOrderTypeUserDefaults()
+        setNaviBarTitle(orderType: orderNumber)
+        requestMovies(orderType: orderNumber)
     }
     
     @objc func didReceiveMoviesNotification(_ noti: Notification) {
@@ -30,6 +39,10 @@ class MovieTableViewController: UIViewController {
             self.tableView.reloadData()
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
+    }
+ 
+    @IBAction func touchUpSettingButton(_ sender: UIBarButtonItem) {
+        setOrderMoviesActionSheet()
     }
 }
 

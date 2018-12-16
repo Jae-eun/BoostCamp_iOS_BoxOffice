@@ -72,7 +72,6 @@ extension MovieDetailViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifiers[section], for: indexPath)
         
         guard let movieInfo = movieInfo else { return UITableViewCell() }
-//        guard let comments = [Comments] else { return UITableViewCell() }
         
         switch section {
         case 0:
@@ -138,12 +137,5 @@ extension MovieDetailViewController: UITableViewDataSource {
 }
 
 extension MovieDetailViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        switch indexPath.section {
-//        case 0:
-//            return 250
-//        default:
-//            return 150
-//        }
-//    }
+
 }
