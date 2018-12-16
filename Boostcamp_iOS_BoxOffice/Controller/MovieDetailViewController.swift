@@ -126,7 +126,7 @@ extension MovieDetailViewController: UITableViewDataSource {
                     commentsCell.composeButton.isHidden = true
                 }
                 commentsCell.writerLabel.text = comments[indexPath.row].writer
-                commentsCell.timestampLabel.text = "\(comments[indexPath.row].timestamp)"
+                commentsCell.timestampLabel.text = "\(comments[indexPath.row].timestampToDateFormat)"
                 commentsCell.contentsLabel.text = comments[indexPath.row].contents
             }
             

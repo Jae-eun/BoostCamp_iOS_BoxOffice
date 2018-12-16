@@ -30,4 +30,13 @@ struct Comments: Codable {
         case rating, timestamp, writer, contents, id
         case movieId = "movie_id"
     }
+    
+    var timestampToDateFormat: String {
+        let timestamp = Date(timeIntervalSince1970: self.timestamp)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.string(from: timestamp)
+    }
 }
