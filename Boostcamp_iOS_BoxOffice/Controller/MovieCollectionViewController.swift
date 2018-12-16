@@ -14,6 +14,8 @@ class MovieCollectionViewController: UIViewController {
     let cellIdentifier: String = "CollectionCell"
     var movies: [Movies] = []
 
+    var gradeImageName: String?
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -45,6 +47,7 @@ extension MovieCollectionViewController: UICollectionViewDataSource {
         let movie: Movies = self.movies[indexPath.item]
         
         cell.movieTitleLabel.text = movie.title
+        cell.gradeImageView.image = UIImage(named: movie.setGradeImageName)
         cell.movieInfoLabel.text = movie.movieCollectionInfo
         cell.releaseDateLabel.text = movie.date
         cell.movieImageView.image = nil
@@ -62,6 +65,15 @@ extension MovieCollectionViewController: UICollectionViewDataSource {
             }
         }
         return cell
+    }
+    
+    func setGradeImage(grade: Int) -> String {
+        if grade == 12 || grade == 15 || grade == 19 {
+            gradeImageName =  "ic_\(grade)"
+        } else {
+            gradeImageName = "ic_allages"
+        }
+        return gradeImageName ?? " "
     }
 }
 

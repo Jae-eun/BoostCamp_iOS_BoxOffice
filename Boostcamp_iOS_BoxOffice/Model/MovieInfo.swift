@@ -42,5 +42,13 @@ struct MovieInfo: Codable {
     var GenreAndDurationText: String {
         return "\(genre)/\(duration)분"
     }
+    
+    var setGradeImageName: String {
+        if grade == 0 {
+            return "ic_allages"
+        } else {
+            return "ic_\(grade)"
+        }
+    }
 }
 

@@ -18,4 +18,9 @@ class MovieInfoTableViewCell: UITableViewCell {
     @IBOutlet weak var reservationRateLabel: UILabel!
     @IBOutlet weak var userRatingLabel: UILabel!
     @IBOutlet weak var audienceLabel: UILabel!
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        movieImageView.image = UIImage(named: "img_placeholder")
+    }
 }

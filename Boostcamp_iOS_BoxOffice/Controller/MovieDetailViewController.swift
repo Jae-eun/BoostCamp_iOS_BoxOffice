@@ -80,11 +80,13 @@ extension MovieDetailViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             movieInfoCell.movieTitleLabel.text = movieInfo.title
+            movieInfoCell.gradeImageView.image = UIImage(named: movieInfo.setGradeImageName)
             movieInfoCell.releaseDateLabel.text = movieInfo.date
             movieInfoCell.detailLabel.text = movieInfo.GenreAndDurationText
             movieInfoCell.reservationRateLabel.text = movieInfo.reservationRateText
             movieInfoCell.userRatingLabel.text = "\(movieInfo.userRating)"
             movieInfoCell.audienceLabel.text = "\(movieInfo.audience)"
+            
             DispatchQueue.global().async {
                 guard let imageURL: URL = URL(string: movieInfo.image) else { return }
                 guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }

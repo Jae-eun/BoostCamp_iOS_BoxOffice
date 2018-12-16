@@ -44,9 +44,9 @@ extension MovieTableViewController: UITableViewDataSource {
         let movie: Movies = self.movies[indexPath.row]
         
         cell.movieTitleLabel.text = movie.title
+        cell.gradeImageView.image = UIImage(named: movie.setGradeImageName)
         cell.movieInfoLabel.text = movie.movieTableInfo
         cell.releaseDateLabel.text = "개봉일 : \(movie.date)"
-        cell.movieImageView.image = nil
         
         DispatchQueue.global().async {
             guard let imageURL: URL = URL(string: movie.thumb) else { return }

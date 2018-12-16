@@ -15,4 +15,9 @@ class MovieCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var movieTitleLabel: UILabel!
     @IBOutlet weak var movieInfoLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        movieImageView.image = UIImage(named: "img_placeholder")
+    }
 }
