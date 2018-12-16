@@ -118,7 +118,7 @@ extension MovieDetailViewController: UITableViewDataSource {
             movieInfoCell.detailLabel.text = movieInfo.GenreAndDurationText
             movieInfoCell.reservationRateLabel.text = movieInfo.reservationRateText
             movieInfoCell.userRatingLabel.text = "\(movieInfo.userRating)"
-            movieInfoCell.audienceLabel.text = "\(movieInfo.audience)"
+            movieInfoCell.audienceLabel.text = movieInfo.numberFormat
             
             DispatchQueue.global().async {
                 guard let imageURL: URL = URL(string: movieInfo.image) else { return }

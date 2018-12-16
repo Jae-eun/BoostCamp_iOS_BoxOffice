@@ -8,10 +8,6 @@
 
 import Foundation
 
-//struct MovieInfoAPIResponse: Codable {
-//    let movieInfo: [MovieInfo]
-//}
-
 struct MovieInfo: Codable {
     let audience: Int
     let grade: Int
@@ -49,6 +45,12 @@ struct MovieInfo: Codable {
         } else {
             return "ic_\(grade)"
         }
+    }
+    
+    var numberFormat: String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        return numberFormatter.string(from: NSNumber(value: audience)) ?? " "
     }
 }
 
