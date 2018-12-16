@@ -14,14 +14,30 @@ class MovieTableViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     let cellIdentifier: String = "TableCell"
     var movies: [Movies] = []
-    
     var orderNumber: Int = 0
+    var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setOrderTypeUserDefaults(orderNumber)
+        addRefreshControl()
     }
+    
+    func addRefreshControl() {
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+    }
+    
+    @objc func refresh(_ sender: Any){
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        self.tableView.reloadData()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        self.refreshControl.endRefreshing()
+
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         

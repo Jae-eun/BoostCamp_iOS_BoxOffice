@@ -23,6 +23,8 @@ extension UIViewController {
     func setNaviBarTitle(orderType: Int) {
         let titleArray = ["예매율순", "큐레이션", "개봉일순"]
         navigationItem.title = titleArray[orderType]
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationItem.backBarButtonItem?.tintColor = .white
     }
     
     func changeMoviesOrder(order: Int) {

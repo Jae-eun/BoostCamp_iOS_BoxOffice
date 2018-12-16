@@ -17,25 +17,11 @@ class MovieDetailViewController: UIViewController {
     var movieInfo: MovieInfo?
     var comments: [Comments]?
     var movieId: String?
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
+    var maximumView: UIView!
+    var refreshControl = UIRefreshControl()
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0,1,2:
-            return 1
-        default:
-            return comments?.count ?? 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 10
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,8 +31,22 @@ class MovieDetailViewController: UIViewController {
         
         requestMovieInfo(id: movieId ?? " ")
         requestComments(id: movieId ?? " ")
+        
+        addRefreshControl()
     }
-
+    
+    func addRefreshControl() {
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+    }
+    
+    @objc func refresh(_ sender: Any){
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        self.tableView.reloadData()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        self.refreshControl.endRefreshing()
+    }
+    
     @objc func didReceiveMovieInfoNotification(_ noti: Notification) {
         guard let movieInfo: MovieInfo = noti.userInfo?["movieInfo"] as? MovieInfo else { return  }
         self.movieInfo = movieInfo
@@ -63,6 +63,40 @@ class MovieDetailViewController: UIViewController {
             self.tableView.reloadData()
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 4
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0,1,2:
+            return 1
+        default:
+            return comments?.count ?? 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10
+    }
+ 
+    @IBAction func maximizeImageTapGesture(_ sender: UITapGestureRecognizer) {
+            maximumView.frame = UIScreen.main.bounds
+            maximumView.contentMode = .scaleAspectFit
+            maximumView.isUserInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(dismissMaximumImage))
+            maximumView.addGestureRecognizer(tap)
+            self.view.addSubview(maximumView)
+            self.navigationController?.isNavigationBarHidden = true
+            self.tabBarController?.tabBar.isHidden = true
+    }
+    
+    @objc func dismissMaximumImage(_ sender: UITapGestureRecognizer) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        sender.view?.removeFromSuperview()
     }
 }
 
@@ -94,6 +128,9 @@ extension MovieDetailViewController: UITableViewDataSource {
                     if let index: IndexPath = tableView.indexPath(for: cell) {
                         if index.row == indexPath.row {
                             movieInfoCell.movieImageView.image = UIImage(data: imageData)
+                            self.maximumView = UIImageView(image: movieInfoCell.movieImageView.image)
+                            let tap = UITapGestureRecognizer(target: self, action: Selector(("maximizeImageTapGesture")))
+                            movieInfoCell.movieImageView.addGestureRecognizer(tap)
                         }
                     }
                 }
@@ -134,8 +171,4 @@ extension MovieDetailViewController: UITableViewDataSource {
         }
         return cell
     }
-}
-
-extension MovieDetailViewController: UITableViewDelegate {
-
 }
