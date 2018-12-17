@@ -88,8 +88,8 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
         maximumView.frame = UIScreen.main.bounds
         maximumView.contentMode = .scaleAspectFit
         maximumView.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissMaximumImage))
-        maximumView.addGestureRecognizer(tap)
+        let closeTap = UITapGestureRecognizer(target: self, action: #selector(dismissMaximumImage))
+        maximumView.addGestureRecognizer(closeTap)
         self.view.addSubview(maximumView)
         self.navigationController?.isNavigationBarHidden = true
         self.tabBarController?.tabBar.isHidden = true
@@ -131,13 +131,12 @@ extension MovieDetailViewController: UITableViewDataSource {
                         if index.row == indexPath.row {
                             movieInfoCell.movieImageView.image = UIImage(data: imageData)
                             self.maximumView = UIImageView(image: movieInfoCell.movieImageView.image)
-                            let tap = UITapGestureRecognizer(target: self, action: Selector(("maximizeImageTapGesture")))
+                            let tap = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped))
                             movieInfoCell.movieImageView.addGestureRecognizer(tap)
                         }
                     }
                 }
             }
-
         case 1:
             guard let synopsisCell = cell as? SynopsisTableViewCell else {
                 return UITableViewCell()

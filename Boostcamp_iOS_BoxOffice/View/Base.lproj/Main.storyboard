@@ -625,6 +625,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
+                        <color key="tintColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="jxy-L4-J35" firstAttribute="leading" secondItem="O1u-W8-tvY" secondAttribute="leading" id="1M1-6c-hPa"/>
                             <constraint firstItem="jxy-L4-J35" firstAttribute="trailing" secondItem="O1u-W8-tvY" secondAttribute="trailing" id="Eem-wB-Prb"/>
