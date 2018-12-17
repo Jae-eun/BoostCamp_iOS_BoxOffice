@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieDetailViewController: UIViewController {
+class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -19,7 +19,7 @@ class MovieDetailViewController: UIViewController {
     var movieId: String?
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
-    var maximumView: UIView!
+    var maximumView: UIView = UIView()
     var refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
@@ -82,15 +82,17 @@ class MovieDetailViewController: UIViewController {
         return 10
     }
  
-    @IBAction func maximizeImageTapGesture(_ sender: UITapGestureRecognizer) {
-            maximumView.frame = UIScreen.main.bounds
-            maximumView.contentMode = .scaleAspectFit
-            maximumView.isUserInteractionEnabled = true
-            let tap = UITapGestureRecognizer(target: self, action: #selector(dismissMaximumImage))
-            maximumView.addGestureRecognizer(tap)
-            self.view.addSubview(maximumView)
-            self.navigationController?.isNavigationBarHidden = true
-            self.tabBarController?.tabBar.isHidden = true
+    @IBAction func imageTapped(_ sender: UITapGestureRecognizer) {
+        guard let imageView = sender.view as? UIImageView else { return }
+        let maximumView = UIImageView(image: imageView.image)
+        maximumView.frame = UIScreen.main.bounds
+        maximumView.contentMode = .scaleAspectFit
+        maximumView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissMaximumImage))
+        maximumView.addGestureRecognizer(tap)
+        self.view.addSubview(maximumView)
+        self.navigationController?.isNavigationBarHidden = true
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     @objc func dismissMaximumImage(_ sender: UITapGestureRecognizer) {

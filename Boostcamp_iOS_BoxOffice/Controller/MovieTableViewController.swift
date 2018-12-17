@@ -30,12 +30,10 @@ class MovieTableViewController: UIViewController {
     }
     
     @objc func refresh(_ sender: Any){
-        
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         self.tableView.reloadData()
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         self.refreshControl.endRefreshing()
-
     }
     
     override func viewDidAppear(_ animated: Bool) {
