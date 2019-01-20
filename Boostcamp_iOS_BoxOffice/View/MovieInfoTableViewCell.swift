@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieInfoTableViewCell: UITableViewCell {
+class MovieInfoTableViewCell: UITableViewCell, RatingEnabled {
     
     @IBOutlet weak var movieImageView: UIImageView!
     @IBOutlet weak var movieTitleLabel: UILabel!
@@ -18,6 +18,7 @@ class MovieInfoTableViewCell: UITableViewCell {
     @IBOutlet weak var reservationRateLabel: UILabel!
     @IBOutlet weak var userRatingLabel: UILabel!
     @IBOutlet weak var audienceLabel: UILabel!
+    @IBOutlet weak var ratingStackView: UIStackView!
     
     override func prepareForReuse() {
         super.prepareForReuse()

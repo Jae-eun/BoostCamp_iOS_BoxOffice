@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CommentsTableViewCell: UITableViewCell {
+class CommentsTableViewCell: UITableViewCell, RatingEnabled {
     
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var writerLabel: UILabel!
@@ -16,4 +16,5 @@ class CommentsTableViewCell: UITableViewCell {
     @IBOutlet weak var contentsLabel: UILabel!
     @IBOutlet weak var commentTitleLabel: UILabel!
     @IBOutlet weak var composeButton: UIButton!
+    @IBOutlet weak var ratingStackView: UIStackView!
 }
