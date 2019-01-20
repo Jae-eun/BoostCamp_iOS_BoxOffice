@@ -27,6 +27,8 @@ class MovieDetailViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieInfoNotification(_:)), name: .didReceiveMovieInfoNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsNotification(_:)), name: .didReceiveCommentsNotification, object: nil)
         addRefreshControl()
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -116,6 +118,7 @@ extension MovieDetailViewController: UITableViewDataSource {
                             self.maximumView = UIImageView(image: movieInfoCell.movieImageView.image)
                             let tap = UITapGestureRecognizer(target: self, action: #selector(self.imageViewDidTap))
                             movieInfoCell.movieImageView.addGestureRecognizer(tap)
+                            movieInfoCell.setUserRating(movieInfo.userRating, to: movieInfoCell.ratingStackView)
                         }
                     }
                 }
@@ -146,6 +149,7 @@ extension MovieDetailViewController: UITableViewDataSource {
                 commentsCell.writerLabel.text = comments[indexPath.row].writer
                 commentsCell.timestampLabel.text = "\(comments[indexPath.row].timestampToDateFormat)"
                 commentsCell.contentsLabel.text = comments[indexPath.row].contents
+                commentsCell.setUserRating(comments[indexPath.row].rating, to: commentsCell.ratingStackView)
             }
         default:
             break
