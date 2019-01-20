@@ -10,10 +10,10 @@ import Foundation
 
 struct CommentsAPIResponse: Codable {
     let comments: [Comments]
-    let movieId: String
+    let movieID: String
     
     enum CodingKeys: String, CodingKey {
         case comments
-        case movieId = "movie_id"
+        case movieID = "movie_id"
     }
 }

@@ -82,7 +82,7 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
         return 10
     }
  
-    @IBAction func imageTapped(_ sender: UITapGestureRecognizer) {
+    @IBAction func imageViewDidTap(_ sender: UITapGestureRecognizer) {
         guard let imageView = sender.view as? UIImageView else { return }
         let maximumView = UIImageView(image: imageView.image)
         maximumView.frame = UIScreen.main.bounds
@@ -119,9 +119,9 @@ extension MovieDetailViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             movieInfoCell.movieTitleLabel.text = movieInfo.title
-            movieInfoCell.gradeImageView.image = UIImage(named: movieInfo.setGradeImageName)
+            movieInfoCell.gradeImageView.image = UIImage(named: movieInfo.gradeImageName)
             movieInfoCell.releaseDateLabel.text = movieInfo.date
-            movieInfoCell.detailLabel.text = movieInfo.GenreAndDurationText
+            movieInfoCell.detailLabel.text = movieInfo.genreAndDurationText
             movieInfoCell.reservationRateLabel.text = movieInfo.reservationRateText
             movieInfoCell.userRatingLabel.text = "\(movieInfo.userRating)"
             movieInfoCell.audienceLabel.text = movieInfo.numberFormat
@@ -135,7 +135,7 @@ extension MovieDetailViewController: UITableViewDataSource {
                         if index.row == indexPath.row {
                             movieInfoCell.movieImageView.image = UIImage(data: imageData)
                             self.maximumView = UIImageView(image: movieInfoCell.movieImageView.image)
-                            let tap = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped))
+                            let tap = UITapGestureRecognizer(target: self, action: #selector(self.imageViewDidTap))
                             movieInfoCell.movieImageView.addGestureRecognizer(tap)
                         }
                     }

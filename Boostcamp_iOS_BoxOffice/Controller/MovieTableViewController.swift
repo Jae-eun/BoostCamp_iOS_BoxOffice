@@ -41,8 +41,8 @@ class MovieTableViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: .didReceiveMoviesNotification, object: nil)
 
-        orderNumber = getOrderTypeUserDefaults()
-        setNaviBarTitle(orderType: orderNumber)
+        orderNumber = orderTypeUserDefaults
+        setNavigationBarTitle(orderType: orderNumber)
         API.shared.requestMovies(orderType: orderNumber)
     }
     
@@ -56,7 +56,7 @@ class MovieTableViewController: UIViewController {
     }
  
     @IBAction func touchUpSettingButton(_ sender: UIBarButtonItem) {
-        setOrderMoviesActionSheet()
+        presentOrderMoviesActionSheet()
     }
     
     deinit {

@@ -12,13 +12,13 @@ struct Comments: Codable {
     let rating: Double
     let timestamp: Double
     let writer: String
-    let movieId: String
+    let movieID: String
     let contents: String
     let id: String
     
     enum CodingKeys: String, CodingKey {
         case rating, timestamp, writer, contents, id
-        case movieId = "movie_id"
+        case movieID = "movie_id"
     }
     
     var timestampToDateFormat: String {

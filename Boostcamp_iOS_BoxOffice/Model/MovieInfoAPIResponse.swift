@@ -35,11 +35,11 @@ struct MovieInfoAPIResponse: Codable {
         return "\(reservationGrade)위 \(reservationRate)%"
     }
     
-    var GenreAndDurationText: String {
+    var genreAndDurationText: String {
         return "\(genre)/\(duration)분"
     }
     
-    var setGradeImageName: String {
+    var gradeImageName: String {
         if grade == 0 {
             return "ic_allages"
         } else {
