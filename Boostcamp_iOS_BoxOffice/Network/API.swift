@@ -35,7 +35,7 @@ class API {
         Network.get(url) { data, error in
             if let data = data {
                 do {
-                    let apiResponse = try JSONDecoder().decode(MovieInfo.self, from: data)
+                    let apiResponse = try JSONDecoder().decode(MovieInfoAPIResponse.self, from: data)
                     NotificationCenter.default.post(name: .didReceiveMovieInfoNotification, object: nil, userInfo: ["movieInfo": apiResponse])
                 } catch {
                     print(error.localizedDescription)

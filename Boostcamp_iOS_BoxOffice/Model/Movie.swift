@@ -1,22 +1,12 @@
 //
-//  Movies.swift
+//  Movie.swift
 //  Boostcamp_iOS_BoxOffice
 //
-//  Created by 이재은 on 08/12/2018.
-//  Copyright © 2018 이재은. All rights reserved.
+//  Created by Presto on 20/01/2019.
+//  Copyright © 2019 이재은. All rights reserved.
 //
 
 import Foundation
-
-struct MoviesAPIResponse: Codable {
-    let movies: [Movies]
-    let orderType: Int
-    
-    enum CodingKeys: String, CodingKey {
-        case movies
-        case orderType = "order_type"
-    }
-}
 
 struct Movies: Codable {
     let grade: Int
@@ -27,7 +17,7 @@ struct Movies: Codable {
     let userRating: Double
     let date: String
     let id: String
-
+    
     enum CodingKeys: String, CodingKey {
         case grade, thumb, title, date, id
         case reservationRate = "reservation_rate"

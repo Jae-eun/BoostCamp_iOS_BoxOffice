@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct MovieInfo: Codable {
+struct MovieInfoAPIResponse: Codable {
     let audience: Int
     let grade: Int
     let actor: String

@@ -44,7 +44,6 @@ class MovieCollectionViewController: UIViewController {
         orderNumber = getOrderTypeUserDefaults()
         if let orderNumber = orderNumber {
             setNaviBarTitle(orderType: orderNumber)
-            requestMovies(orderType: orderNumber)
             API.shared.requestMovies(orderType: orderNumber)
         }
     }

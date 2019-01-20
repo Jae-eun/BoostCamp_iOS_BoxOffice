@@ -14,7 +14,7 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
     
     let cellIdentifiers: [String] = ["MovieInfoCell", "SynopsisCell", "DirectorCell", "CommentsCell"]
     
-    var movieInfo: MovieInfo?
+    var movieInfo: MovieInfoAPIResponse?
     var comments: [Comments]?
     var movieId: String?
     let screenWidth = UIScreen.main.bounds.width
@@ -32,9 +32,6 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
         API.shared.requestMovieInfo(id: movieId ?? "")
         API.shared.requestComments(id: movieId ?? "")
         
-        //requestMovieInfo(id: movieId ?? " ")
-        //requestComments(id: movieId ?? " ")
-        
         addRefreshControl()
     }
     
@@ -51,7 +48,7 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc func didReceiveMovieInfoNotification(_ noti: Notification) {
-        guard let movieInfo: MovieInfo = noti.userInfo?["movieInfo"] as? MovieInfo else { return  }
+        guard let movieInfo: MovieInfoAPIResponse = noti.userInfo?["movieInfo"] as? MovieInfoAPIResponse else { return  }
         self.movieInfo = movieInfo
         DispatchQueue.main.async {
             self.tableView.reloadData()

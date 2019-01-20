@@ -30,7 +30,7 @@ extension UIViewController {
     func changeMoviesOrder(order: Int) {
         self.setOrderTypeUserDefaults(order)
         self.setNaviBarTitle(orderType: order)
-        requestMovies(orderType: order)
+        API.shared.requestMovies(orderType: order)
     }
     
     func setOrderMoviesActionSheet() {
