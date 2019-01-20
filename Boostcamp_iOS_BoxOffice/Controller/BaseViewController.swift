@@ -10,17 +10,17 @@ import UIKit
 
 extension UIViewController {
     
-    func setOrderTypeUserDefaults(_ order: Int) {
-        let userDefaults = UserDefaults.standard
-        userDefaults.set(order, forKey: "orderType")
-    }
-    
-    func getOrderTypeUserDefaults() -> Int {
-        let orderType = UserDefaults.standard.integer(forKey: "orderType")
-        return orderType
+    var orderTypeUserDefaults: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: "orderType")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "orderType")
+        }
+        
     }
 
-    func setNaviBarTitle(orderType: Int) {
+    func setNavigationBarTitle(orderType: Int) {
         let titleArray = ["예매율순", "큐레이션", "개봉일순"]
         navigationItem.title = titleArray[orderType]
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
@@ -28,14 +28,13 @@ extension UIViewController {
     }
     
     func changeMoviesOrder(order: Int) {
-        self.setOrderTypeUserDefaults(order)
-        self.setNaviBarTitle(orderType: order)
-        requestMovies(orderType: order)
+        orderTypeUserDefaults = order
+        setNavigationBarTitle(orderType: order)
+        API.shared.requestMovies(orderType: order)
     }
     
-    func setOrderMoviesActionSheet() {
+    func presentOrderMoviesActionSheet() {
         let alertController = UIAlertController(title: "정렬방식 선택", message: "영화를 어떤 순서로 정렬할까요?", preferredStyle: .actionSheet)
-
         let orderAction1 = UIAlertAction(title: "예매율", style: .default) { (UIAlertAction) in
             self.changeMoviesOrder(order: 0)
         }
@@ -46,12 +45,10 @@ extension UIViewController {
             self.changeMoviesOrder(order: 2)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        
         alertController.addAction(orderAction1)
         alertController.addAction(orderAction2)
         alertController.addAction(orderAction3)
         alertController.addAction(cancelAction)
-        
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }

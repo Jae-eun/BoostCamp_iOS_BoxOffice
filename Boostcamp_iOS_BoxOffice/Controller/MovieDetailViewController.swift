@@ -8,13 +8,13 @@
 
 import UIKit
 
-class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
+class MovieDetailViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
     let cellIdentifiers: [String] = ["MovieInfoCell", "SynopsisCell", "DirectorCell", "CommentsCell"]
     
-    var movieInfo: MovieInfo?
+    var movieInfo: MovieInfoAPIResponse?
     var comments: [Comments]?
     var movieId: String?
     let screenWidth = UIScreen.main.bounds.width
@@ -24,33 +24,21 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieInfoNotification(_:)), name: DidReceiveMovieInfoNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsNotification(_:)), name: DidReceiveCommentsNotification, object: nil)
-        
-        requestMovieInfo(id: movieId ?? " ")
-        requestComments(id: movieId ?? " ")
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieInfoNotification(_:)), name: .didReceiveMovieInfoNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsNotification(_:)), name: .didReceiveCommentsNotification, object: nil)
         addRefreshControl()
         
         
     }
     
-    func addRefreshControl() {
-        tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        API.shared.requestMovieInfo(id: movieId ?? "")
+        API.shared.requestComments(id: movieId ?? "")
     }
     
-    @objc func refresh(_ sender: Any){
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        self.tableView.reloadData()
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        self.refreshControl.endRefreshing()
-    }
-    
-    @objc func didReceiveMovieInfoNotification(_ noti: Notification) {
-        guard let movieInfo: MovieInfo = noti.userInfo?["movieInfo"] as? MovieInfo else { return  }
+    @objc func didReceiveMovieInfoNotification(_ notification: Notification) {
+        guard let movieInfo: MovieInfoAPIResponse = notification.userInfo?["movieInfo"] as? MovieInfoAPIResponse else { return  }
         self.movieInfo = movieInfo
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -58,8 +46,8 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    @objc func didReceiveCommentsNotification(_ noti: Notification) {
-        guard let comments: [Comments] = noti.userInfo?["comments"] as? [Comments] else { return  }
+    @objc func didReceiveCommentsNotification(_ notification: Notification) {
+        guard let comments: [Comments] = notification.userInfo?["comments"] as? [Comments] else { return  }
         self.comments = comments
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -67,24 +55,14 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+    @objc func refreshControlDidOccur(_ sender: Any){
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        self.tableView.reloadData()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        self.refreshControl.endRefreshing()
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0,1,2:
-            return 1
-        default:
-            return comments?.count ?? 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 10
-    }
- 
-    @IBAction func imageTapped(_ sender: UITapGestureRecognizer) {
+    @IBAction func imageViewDidTap(_ sender: UITapGestureRecognizer) {
         guard let imageView = sender.view as? UIImageView else { return }
         let maximumView = UIImageView(image: imageView.image)
         maximumView.frame = UIScreen.main.bounds
@@ -102,38 +80,43 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
         self.tabBarController?.tabBar.isHidden = false
         sender.view?.removeFromSuperview()
     }
+    
+    func addRefreshControl() {
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshControlDidOccur(_:)), for: .valueChanged)
+    }
+ 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 extension MovieDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = indexPath.section
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifiers[section], for: indexPath)
-        
         guard let movieInfo = movieInfo else { return UITableViewCell() }
-        
         switch section {
         case 0:
             guard let movieInfoCell = cell as? MovieInfoTableViewCell else {
                 return UITableViewCell()
             }
             movieInfoCell.movieTitleLabel.text = movieInfo.title
-            movieInfoCell.gradeImageView.image = UIImage(named: movieInfo.setGradeImageName)
+            movieInfoCell.gradeImageView.image = UIImage(named: movieInfo.gradeImageName)
             movieInfoCell.releaseDateLabel.text = movieInfo.date
-            movieInfoCell.detailLabel.text = movieInfo.GenreAndDurationText
+            movieInfoCell.detailLabel.text = movieInfo.genreAndDurationText
             movieInfoCell.reservationRateLabel.text = movieInfo.reservationRateText
             movieInfoCell.userRatingLabel.text = "\(movieInfo.userRating)"
             movieInfoCell.audienceLabel.text = movieInfo.numberFormat
-            
             DispatchQueue.global().async {
                 guard let imageURL: URL = URL(string: movieInfo.image) else { return }
                 guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
-                
                 DispatchQueue.main.async {
                     if let index: IndexPath = tableView.indexPath(for: cell) {
                         if index.row == indexPath.row {
                             movieInfoCell.movieImageView.image = UIImage(data: imageData)
                             self.maximumView = UIImageView(image: movieInfoCell.movieImageView.image)
-                            let tap = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped))
+                            let tap = UITapGestureRecognizer(target: self, action: #selector(self.imageViewDidTap))
                             movieInfoCell.movieImageView.addGestureRecognizer(tap)
                             movieInfoCell.setUserRating(movieInfo.userRating, to: movieInfoCell.ratingStackView)
                         }
@@ -145,14 +128,12 @@ extension MovieDetailViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             synopsisCell.synopsisLabel.text = movieInfo.synopsis
-
         case 2:
             guard let directorCell = cell as? DirectorTableViewCell else {
                 return UITableViewCell()
             }
             directorCell.directorLabel.text = movieInfo.director
             directorCell.actorLabel.text = movieInfo.actor
-            
         case 3:
             guard let commentsCell = cell as? CommentsTableViewCell else {
                 return UITableViewCell()
@@ -170,10 +151,28 @@ extension MovieDetailViewController: UITableViewDataSource {
                 commentsCell.contentsLabel.text = comments[indexPath.row].contents
                 commentsCell.setUserRating(comments[indexPath.row].rating, to: commentsCell.ratingStackView)
             }
-            
         default:
             break
         }
         return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 4
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0,1,2:
+            return 1
+        default:
+            return comments?.count ?? 0
+        }
+    }
+}
+
+extension MovieDetailViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10
     }
 }
