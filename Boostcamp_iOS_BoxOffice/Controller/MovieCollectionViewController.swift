@@ -20,27 +20,12 @@ class MovieCollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-   
         addRefreshControl()
-    }
-    
-    func addRefreshControl() {
-        collectionView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
-    }
-    
-    @objc func refresh(_ sender: Any){
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        self.collectionView.reloadData()
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        self.refreshControl.endRefreshing()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: .didReceiveMoviesNotification, object: nil)
-        
         orderNumber = orderTypeUserDefaults
         if let orderNumber = orderNumber {
             setNavigationBarTitle(orderType: orderNumber)
@@ -50,17 +35,36 @@ class MovieCollectionViewController: UIViewController {
     
     @objc func didReceiveMoviesNotification(_ noti: Notification) {
         guard let movies: [Movies] = noti.userInfo?["movies"] as? [Movies] else { return  }
-        
         self.movies = movies
-        
         DispatchQueue.main.async {
             self.collectionView.reloadData()
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
     
+    @objc func refreshControlDidOccur(_ sender: Any){
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        self.collectionView.reloadData()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        self.refreshControl.endRefreshing()
+    }
+    
     @IBAction func touchUpSettingButton(_ sender: UIBarButtonItem) {
         presentOrderMoviesActionSheet()
+    }
+    
+    func addRefreshControl() {
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshControlDidOccur(_:)), for: .valueChanged)
+    }
+    
+    func setGradeImage(grade: Int) -> String {
+        if grade == 12 || grade == 15 || grade == 19 {
+            gradeImageName =  "ic_\(grade)"
+        } else {
+            gradeImageName = "ic_allages"
+        }
+        return gradeImageName ?? " "
     }
     
     deinit {
@@ -69,25 +73,17 @@ class MovieCollectionViewController: UIViewController {
 }
 
 extension MovieCollectionViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movies.count
-    }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell: MovieCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellIdentifier, for: indexPath) as? MovieCollectionViewCell else { return UICollectionViewCell() }
-        
         let movie: Movies = self.movies[indexPath.item]
-        
         cell.movieTitleLabel.text = movie.title
         cell.gradeImageView.image = UIImage(named: movie.setGradeImageName)
         cell.movieInfoLabel.text = movie.movieCollectionInfo
         cell.releaseDateLabel.text = movie.date
         cell.movieImageView.image = nil
-        
         DispatchQueue.global().async {
             guard let imageURL: URL = URL(string: movie.thumb) else { return }
             guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
-            
             DispatchQueue.main.async {
                 if let index: IndexPath = collectionView.indexPath(for: cell) {
                     if index.row == indexPath.row {
@@ -99,25 +95,17 @@ extension MovieCollectionViewController: UICollectionViewDataSource {
         return cell
     }
     
-    func setGradeImage(grade: Int) -> String {
-        if grade == 12 || grade == 15 || grade == 19 {
-            gradeImageName =  "ic_\(grade)"
-        } else {
-            gradeImageName = "ic_allages"
-        }
-        return gradeImageName ?? " "
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return movies.count
     }
 }
 
 extension MovieCollectionViewController: UICollectionViewDelegate {
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = movies[indexPath.item]
-        
         guard let movieDetailViewController = storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController else { return }
         movieDetailViewController.title = movie.title
         movieDetailViewController.movieId = movie.id
-
         navigationController?.pushViewController(movieDetailViewController, animated: true)
     }
 }

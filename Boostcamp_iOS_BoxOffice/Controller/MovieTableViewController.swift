@@ -19,28 +19,13 @@ class MovieTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setOrderTypeUserDefaults(orderNumber)
         addRefreshControl()
     }
     
-    func addRefreshControl() {
-        tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
-    }
-    
-    @objc func refresh(_ sender: Any){
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        self.tableView.reloadData()
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        self.refreshControl.endRefreshing()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: .didReceiveMoviesNotification, object: nil)
-
         orderNumber = orderTypeUserDefaults
         setNavigationBarTitle(orderType: orderNumber)
         API.shared.requestMovies(orderType: orderNumber)
@@ -54,9 +39,21 @@ class MovieTableViewController: UIViewController {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
+    
+    @objc func refreshControlDidOccur(_ sender: Any){
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        self.tableView.reloadData()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        self.refreshControl.endRefreshing()
+    }
  
     @IBAction func touchUpSettingButton(_ sender: UIBarButtonItem) {
         presentOrderMoviesActionSheet()
+    }
+    
+    func addRefreshControl() {
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshControlDidOccur(_:)), for: .valueChanged)
     }
     
     deinit {
@@ -71,18 +68,14 @@ extension MovieTableViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: MovieTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIdentifier, for: indexPath) as? MovieTableViewCell else { return UITableViewCell() }
-        
         let movie: Movies = self.movies[indexPath.row]
-        
         cell.movieTitleLabel.text = movie.title
         cell.gradeImageView.image = UIImage(named: movie.setGradeImageName)
         cell.movieInfoLabel.text = movie.movieTableInfo
         cell.releaseDateLabel.text = "개봉일 : \(movie.date)"
-        
         DispatchQueue.global().async {
             guard let imageURL: URL = URL(string: movie.thumb) else { return }
             guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
-            
             DispatchQueue.main.async {
                 if let index: IndexPath = tableView.indexPath(for: cell) {
                     if index.row == indexPath.row {
@@ -102,11 +95,9 @@ extension MovieTableViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let movie = movies[indexPath.row]
-        
         guard let movieDetailViewController = storyboard?.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController else { return }
             movieDetailViewController.title = movie.title
             movieDetailViewController.movieId = movie.id
-
             navigationController?.pushViewController(movieDetailViewController, animated: true)
     }
 }

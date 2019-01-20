@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
+class MovieDetailViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -24,27 +24,15 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieInfoNotification(_:)), name: .didReceiveMovieInfoNotification, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsNotification(_:)), name: .didReceiveCommentsNotification, object: nil)
-        
         API.shared.requestMovieInfo(id: movieId ?? "")
         API.shared.requestComments(id: movieId ?? "")
-        
         addRefreshControl()
     }
     
-    func addRefreshControl() {
-        tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
-    }
-    
-    @objc func refresh(_ sender: Any){
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        self.tableView.reloadData()
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        self.refreshControl.endRefreshing()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     @objc func didReceiveMovieInfoNotification(_ noti: Notification) {
@@ -65,23 +53,13 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+    @objc func refreshControlDidOccur(_ sender: Any){
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        self.tableView.reloadData()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        self.refreshControl.endRefreshing()
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0,1,2:
-            return 1
-        default:
-            return comments?.count ?? 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 10
-    }
- 
     @IBAction func imageViewDidTap(_ sender: UITapGestureRecognizer) {
         guard let imageView = sender.view as? UIImageView else { return }
         let maximumView = UIImageView(image: imageView.image)
@@ -101,6 +79,11 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
         sender.view?.removeFromSuperview()
     }
     
+    func addRefreshControl() {
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshControlDidOccur(_:)), for: .valueChanged)
+    }
+ 
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -110,9 +93,7 @@ extension MovieDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = indexPath.section
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifiers[section], for: indexPath)
-        
         guard let movieInfo = movieInfo else { return UITableViewCell() }
-        
         switch section {
         case 0:
             guard let movieInfoCell = cell as? MovieInfoTableViewCell else {
@@ -125,11 +106,9 @@ extension MovieDetailViewController: UITableViewDataSource {
             movieInfoCell.reservationRateLabel.text = movieInfo.reservationRateText
             movieInfoCell.userRatingLabel.text = "\(movieInfo.userRating)"
             movieInfoCell.audienceLabel.text = movieInfo.numberFormat
-            
             DispatchQueue.global().async {
                 guard let imageURL: URL = URL(string: movieInfo.image) else { return }
                 guard let imageData: Data = try? Data(contentsOf: imageURL) else { return }
-                
                 DispatchQueue.main.async {
                     if let index: IndexPath = tableView.indexPath(for: cell) {
                         if index.row == indexPath.row {
@@ -146,14 +125,12 @@ extension MovieDetailViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             synopsisCell.synopsisLabel.text = movieInfo.synopsis
-
         case 2:
             guard let directorCell = cell as? DirectorTableViewCell else {
                 return UITableViewCell()
             }
             directorCell.directorLabel.text = movieInfo.director
             directorCell.actorLabel.text = movieInfo.actor
-            
         case 3:
             guard let commentsCell = cell as? CommentsTableViewCell else {
                 return UITableViewCell()
@@ -170,10 +147,28 @@ extension MovieDetailViewController: UITableViewDataSource {
                 commentsCell.timestampLabel.text = "\(comments[indexPath.row].timestampToDateFormat)"
                 commentsCell.contentsLabel.text = comments[indexPath.row].contents
             }
-            
         default:
             break
         }
         return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 4
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0,1,2:
+            return 1
+        default:
+            return comments?.count ?? 0
+        }
+    }
+}
+
+extension MovieDetailViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10
     }
 }
