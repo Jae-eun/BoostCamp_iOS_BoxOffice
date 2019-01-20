@@ -33,6 +33,8 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
         requestComments(id: movieId ?? " ")
         
         addRefreshControl()
+        
+        
     }
     
     func addRefreshControl() {
@@ -133,6 +135,7 @@ extension MovieDetailViewController: UITableViewDataSource {
                             self.maximumView = UIImageView(image: movieInfoCell.movieImageView.image)
                             let tap = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped))
                             movieInfoCell.movieImageView.addGestureRecognizer(tap)
+                            movieInfoCell.setUserRating(movieInfo.userRating, to: movieInfoCell.ratingStackView)
                         }
                     }
                 }
@@ -165,6 +168,7 @@ extension MovieDetailViewController: UITableViewDataSource {
                 commentsCell.writerLabel.text = comments[indexPath.row].writer
                 commentsCell.timestampLabel.text = "\(comments[indexPath.row].timestampToDateFormat)"
                 commentsCell.contentsLabel.text = comments[indexPath.row].contents
+                commentsCell.setUserRating(comments[indexPath.row].rating, to: commentsCell.ratingStackView)
             }
             
         default:

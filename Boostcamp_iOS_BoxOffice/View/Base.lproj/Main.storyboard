@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -138,7 +139,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="267"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="50x-eQ-oGL">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="50x-eQ-oGL">
                                                     <rect key="frame" x="20" y="15" width="114.5" height="160"/>
                                                     <gestureRecognizers/>
                                                     <constraints>
@@ -296,6 +297,7 @@
                                             <outlet property="gradeImageView" destination="fhH-NU-MQ5" id="nnA-UA-Xho"/>
                                             <outlet property="movieImageView" destination="50x-eQ-oGL" id="SGc-c9-Dsz"/>
                                             <outlet property="movieTitleLabel" destination="sqH-Z8-BfZ" id="Aho-tj-TCq"/>
+                                            <outlet property="ratingStackView" destination="OIy-PM-o6n" id="lFz-kE-OgO"/>
                                             <outlet property="releaseDateLabel" destination="e73-fu-70B" id="BTx-DD-LQL"/>
                                             <outlet property="reservationRateLabel" destination="1ln-6f-fma" id="tdU-fX-knE"/>
                                             <outlet property="userRatingLabel" destination="vaz-uX-g4Y" id="pSz-LJ-EtN"/>
@@ -502,6 +504,7 @@
                                             <outlet property="commentTitleLabel" destination="jHX-Mi-E6q" id="iAM-iJ-TMM"/>
                                             <outlet property="composeButton" destination="50s-b4-QKh" id="aPV-LD-1kK"/>
                                             <outlet property="contentsLabel" destination="QOB-6S-xbw" id="oBN-vE-El5"/>
+                                            <outlet property="ratingStackView" destination="mh0-Ls-8dZ" id="IQM-YP-GpQ"/>
                                             <outlet property="timestampLabel" destination="Oyz-Dm-jUP" id="Kun-hT-Ud9"/>
                                             <outlet property="userImageView" destination="mmY-tu-NdX" id="t9j-Yt-iVm"/>
                                             <outlet property="writerLabel" destination="cIg-F2-YEp" id="VdR-VL-NkG"/>

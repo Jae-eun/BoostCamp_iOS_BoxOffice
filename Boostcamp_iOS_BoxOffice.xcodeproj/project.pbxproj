@@ -25,6 +25,7 @@
 		AF70A09621F485FC00D899CB /* MovieTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF70A08621F485FC00D899CB /* MovieTableViewController.swift */; };
 		AF70A09721F485FC00D899CB /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF70A08721F485FC00D899CB /* MovieDetailViewController.swift */; };
 		AF70A09821F485FC00D899CB /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF70A08921F485FC00D899CB /* Request.swift */; };
+		AF70A09A21F48C3000D899CB /* RatingEnabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF70A09921F48C3000D899CB /* RatingEnabled.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		AF70A08621F485FC00D899CB /* MovieTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieTableViewController.swift; sourceTree = "<group>"; };
 		AF70A08721F485FC00D899CB /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		AF70A08921F485FC00D899CB /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		AF70A09921F48C3000D899CB /* RatingEnabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingEnabled.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				008635FB21BB9283002CED86 /* Assets.xcassets */,
 				008635FD21BB9283002CED86 /* LaunchScreen.storyboard */,
 				0086360021BB9283002CED86 /* Info.plist */,
+				AF70A09921F48C3000D899CB /* RatingEnabled.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				AF70A08B21F485FC00D899CB /* Movies.swift in Sources */,
 				AF70A09121F485FC00D899CB /* MovieInfoTableViewCell.swift in Sources */,
 				AF70A09221F485FC00D899CB /* CommentsTableViewCell.swift in Sources */,
+				AF70A09A21F48C3000D899CB /* RatingEnabled.swift in Sources */,
 				AF70A08C21F485FC00D899CB /* Comments.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
