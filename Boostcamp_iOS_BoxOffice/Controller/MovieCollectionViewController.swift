@@ -15,22 +15,18 @@ class MovieCollectionViewController: UIViewController {
     var movies: [Movies] = []
 
     var gradeImageName: String?
-    var orderNumber: Int?
     var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addRefreshControl()
+        setNavigationBarTitle(orderType: orderTypeUserDefaults)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: .didReceiveMoviesNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: .didReceiveMoviesNotification, object: nil)
-        orderNumber = orderTypeUserDefaults
-        if let orderNumber = orderNumber {
-            setNavigationBarTitle(orderType: orderNumber)
-            API.shared.requestMovies(orderType: orderNumber)
-        }
+        API.shared.requestMovies(orderType: orderTypeUserDefaults)
     }
     
     @objc func didReceiveMoviesNotification(_ noti: Notification) {

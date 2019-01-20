@@ -14,21 +14,18 @@ class MovieTableViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     let cellIdentifier: String = "TableCell"
     var movies: [Movies] = []
-    var orderNumber: Int = 0
     var refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        orderTypeUserDefaults = orderNumber
         addRefreshControl()
+        setNavigationBarTitle(orderType: orderTypeUserDefaults)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: .didReceiveMoviesNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: .didReceiveMoviesNotification, object: nil)
-        orderNumber = orderTypeUserDefaults
-        setNavigationBarTitle(orderType: orderNumber)
-        API.shared.requestMovies(orderType: orderNumber)
+        API.shared.requestMovies(orderType: orderTypeUserDefaults)
     }
     
     @objc func didReceiveMoviesNotification(_ noti: Notification) {
