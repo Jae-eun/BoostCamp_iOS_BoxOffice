@@ -8,9 +8,7 @@
 
 import Foundation
 
-let DidReceiveMoviesNotification: Notification.Name = Notification.Name("DidReceiveMovies")
-let DidReceiveMovieInfoNotification: Notification.Name = Notification.Name("DidReceiveMovieInfo")
-let DidReceiveCommentsNotification: Notification.Name = Notification.Name("DidReceiveComments")
+
 
 let baseUrl: String = "http://connect-boxoffice.run.goorm.io/"
 
@@ -34,7 +32,7 @@ func requestMovies(orderType: Int) {
         do {
             let apiResponse: MoviesAPIResponse = try JSONDecoder().decode(MoviesAPIResponse.self, from: data)
 
-            NotificationCenter.default.post(name: DidReceiveMoviesNotification, object: nil, userInfo: ["movies": apiResponse.movies])
+            NotificationCenter.default.post(name: .didReceiveMoviesNotification, object: nil, userInfo: ["movies": apiResponse.movies])
         } catch(let err) {
             print(err.localizedDescription)
         }
@@ -62,7 +60,7 @@ func requestMovieInfo(id: String) {
         do {
             let apiResponse: MovieInfo = try JSONDecoder().decode(MovieInfo.self, from: data)
             
-            NotificationCenter.default.post(name: DidReceiveMovieInfoNotification, object: nil, userInfo: ["movieInfo": apiResponse])
+            NotificationCenter.default.post(name: .didReceiveMovieInfoNotification, object: nil, userInfo: ["movieInfo": apiResponse])
         } catch(let err) {
             print(err.localizedDescription)
         }
@@ -90,7 +88,7 @@ func requestComments(id: String) {
         do {
             let apiResponse: CommentsAPIResponse = try JSONDecoder().decode(CommentsAPIResponse.self, from: data)
             
-            NotificationCenter.default.post(name: DidReceiveCommentsNotification, object: nil, userInfo: ["comments": apiResponse.comments])
+            NotificationCenter.default.post(name: .didReceiveCommentsNotification, object: nil, userInfo: ["comments": apiResponse.comments])
         } catch(let err) {
             print(err.localizedDescription)
         }

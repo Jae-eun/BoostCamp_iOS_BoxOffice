@@ -39,7 +39,7 @@ class MovieCollectionViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: DidReceiveMoviesNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: .didReceiveMoviesNotification, object: nil)
         
         orderNumber = getOrderTypeUserDefaults()
         if let orderNumber = orderNumber {
@@ -61,6 +61,10 @@ class MovieCollectionViewController: UIViewController {
     
     @IBAction func touchUpSettingButton(_ sender: UIBarButtonItem) {
         setOrderMoviesActionSheet()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 

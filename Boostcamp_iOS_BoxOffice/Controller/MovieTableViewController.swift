@@ -39,7 +39,7 @@ class MovieTableViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: DidReceiveMoviesNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMoviesNotification(_:)), name: .didReceiveMoviesNotification, object: nil)
 
         orderNumber = getOrderTypeUserDefaults()
         setNaviBarTitle(orderType: orderNumber)
@@ -57,6 +57,10 @@ class MovieTableViewController: UIViewController {
  
     @IBAction func touchUpSettingButton(_ sender: UIBarButtonItem) {
         setOrderMoviesActionSheet()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 

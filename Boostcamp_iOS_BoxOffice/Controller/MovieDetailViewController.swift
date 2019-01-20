@@ -25,9 +25,9 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieInfoNotification(_:)), name: DidReceiveMovieInfoNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieInfoNotification(_:)), name: .didReceiveMovieInfoNotification, object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsNotification(_:)), name: DidReceiveCommentsNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsNotification(_:)), name: .didReceiveCommentsNotification, object: nil)
         
         requestMovieInfo(id: movieId ?? " ")
         requestComments(id: movieId ?? " ")
@@ -99,6 +99,10 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.isNavigationBarHidden = false
         self.tabBarController?.tabBar.isHidden = false
         sender.view?.removeFromSuperview()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
