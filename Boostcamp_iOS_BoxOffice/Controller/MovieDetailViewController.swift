@@ -26,17 +26,17 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieInfoNotification(_:)), name: .didReceiveMovieInfoNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsNotification(_:)), name: .didReceiveCommentsNotification, object: nil)
-        API.shared.requestMovieInfo(id: movieId ?? "")
-        API.shared.requestComments(id: movieId ?? "")
         addRefreshControl()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        API.shared.requestMovieInfo(id: movieId ?? "")
+        API.shared.requestComments(id: movieId ?? "")
     }
     
-    @objc func didReceiveMovieInfoNotification(_ noti: Notification) {
-        guard let movieInfo: MovieInfoAPIResponse = noti.userInfo?["movieInfo"] as? MovieInfoAPIResponse else { return  }
+    @objc func didReceiveMovieInfoNotification(_ notification: Notification) {
+        guard let movieInfo: MovieInfoAPIResponse = notification.userInfo?["movieInfo"] as? MovieInfoAPIResponse else { return  }
         self.movieInfo = movieInfo
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -44,8 +44,8 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
-    @objc func didReceiveCommentsNotification(_ noti: Notification) {
-        guard let comments: [Comments] = noti.userInfo?["comments"] as? [Comments] else { return  }
+    @objc func didReceiveCommentsNotification(_ notification: Notification) {
+        guard let comments: [Comments] = notification.userInfo?["comments"] as? [Comments] else { return  }
         self.comments = comments
         DispatchQueue.main.async {
             self.tableView.reloadData()

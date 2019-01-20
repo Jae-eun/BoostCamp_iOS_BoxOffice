@@ -28,8 +28,8 @@ class MovieTableViewController: UIViewController {
         API.shared.requestMovies(orderType: orderTypeUserDefaults)
     }
     
-    @objc func didReceiveMoviesNotification(_ noti: Notification) {
-        guard let movies: [Movies] = noti.userInfo?["movies"] as? [Movies] else { return  }
+    @objc func didReceiveMoviesNotification(_ notification: Notification) {
+        guard let movies: [Movies] = notification.userInfo?["movies"] as? [Movies] else { return  }
         self.movies = movies
         DispatchQueue.main.async {
             self.tableView.reloadData()
