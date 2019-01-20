@@ -43,7 +43,8 @@ class MovieTableViewController: UIViewController {
 
         orderNumber = getOrderTypeUserDefaults()
         setNaviBarTitle(orderType: orderNumber)
-        requestMovies(orderType: orderNumber)
+        API.shared.requestMovies(orderType: orderNumber)
+        //requestMovies(orderType: orderNumber)
     }
     
     @objc func didReceiveMoviesNotification(_ noti: Notification) {

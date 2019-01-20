@@ -29,8 +29,11 @@ class MovieDetailViewController: UIViewController, UIGestureRecognizerDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveCommentsNotification(_:)), name: .didReceiveCommentsNotification, object: nil)
         
-        requestMovieInfo(id: movieId ?? " ")
-        requestComments(id: movieId ?? " ")
+        API.shared.requestMovieInfo(id: movieId ?? "")
+        API.shared.requestComments(id: movieId ?? "")
+        
+        //requestMovieInfo(id: movieId ?? " ")
+        //requestComments(id: movieId ?? " ")
         
         addRefreshControl()
     }
