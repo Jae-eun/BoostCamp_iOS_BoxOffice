@@ -10,13 +10,14 @@ import UIKit
 
 extension UIViewController {
     
-    func setOrderTypeUserDefaults(_ order: Int) {
-        let userDefaults = UserDefaults.standard
-        userDefaults.set(order, forKey: "orderType")
-    }
-    
     var orderTypeUserDefaults: Int {
-        return UserDefaults.standard.integer(forKey: "orderType")
+        get {
+            return UserDefaults.standard.integer(forKey: "orderType")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "orderType")
+        }
+        
     }
 
     func setNavigationBarTitle(orderType: Int) {
@@ -27,14 +28,13 @@ extension UIViewController {
     }
     
     func changeMoviesOrder(order: Int) {
-        self.setOrderTypeUserDefaults(order)
-        self.setNavigationBarTitle(orderType: order)
+        orderTypeUserDefaults = order
+        setNavigationBarTitle(orderType: order)
         API.shared.requestMovies(orderType: order)
     }
     
     func presentOrderMoviesActionSheet() {
         let alertController = UIAlertController(title: "정렬방식 선택", message: "영화를 어떤 순서로 정렬할까요?", preferredStyle: .actionSheet)
-
         let orderAction1 = UIAlertAction(title: "예매율", style: .default) { (UIAlertAction) in
             self.changeMoviesOrder(order: 0)
         }
@@ -45,12 +45,10 @@ extension UIViewController {
             self.changeMoviesOrder(order: 2)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        
         alertController.addAction(orderAction1)
         alertController.addAction(orderAction2)
         alertController.addAction(orderAction3)
         alertController.addAction(cancelAction)
-        
-        self.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }

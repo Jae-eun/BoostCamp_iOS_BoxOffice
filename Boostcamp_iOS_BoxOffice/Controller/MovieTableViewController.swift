@@ -19,7 +19,7 @@ class MovieTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setOrderTypeUserDefaults(orderNumber)
+        orderTypeUserDefaults = orderNumber
         addRefreshControl()
     }
     
